@@ -27,13 +27,16 @@ public class ToDoActivity extends ActionBarActivity {
 	ArrayAdapter<String> itemsAdapter;
 	ListView lvItems;
 	
+	Button btnA;
+	Button btnE;
+	Button btnC;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_todo);
 		
 		init();
-        
 	}
 	
 	private void init(){
@@ -43,6 +46,10 @@ public class ToDoActivity extends ActionBarActivity {
 		lvItems = (ListView)findViewById(R.id.lvItems);
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
+        
+        btnA = (Button)findViewById(R.id.btnAddItem);
+        btnE = (Button)findViewById(R.id.btnEditItem);	
+        btnC = (Button)findViewById(R.id.btnCancel);	
       
         setupListViewListener();
 	}
@@ -63,17 +70,7 @@ public class ToDoActivity extends ActionBarActivity {
 	}	
 	
 	public void canceTodoItem(View v){
-		
-		clearText();
-		
-		Button btnE = (Button)findViewById(R.id.btnEditItem);
-		btnE.setVisibility(View.INVISIBLE);
-
-		Button btnC = (Button)findViewById(R.id.btnCancel);
-		btnC.setVisibility(View.INVISIBLE);
-		
-		Button btn = (Button)findViewById(R.id.btnAddItem);		
-		btn.setVisibility(View.VISIBLE);
+		toggleAddToEditCancelButtons(false);
 	}
 	
 	private void setupListViewListener(){
@@ -85,9 +82,9 @@ public class ToDoActivity extends ActionBarActivity {
 				items.remove(pos);
 				itemsAdapter.notifyDataSetInvalidated();
 				saveItems();
-				Button btnE = (Button)findViewById(R.id.btnEditItem);
+				
 				if(btnE.isShown()){
-					toggleAddEditButtons();
+					toggleAddToEditCancelButtons(false);
 				}
 				return true;
 			}		
@@ -98,12 +95,8 @@ public class ToDoActivity extends ActionBarActivity {
 			@Override
 			public void onItemClick(AdapterView<?> aView, View view, final int pos, long id) {
 				
-				Button btn = (Button)findViewById(R.id.btnAddItem);
-				btn.setVisibility(View.INVISIBLE);
-		        
-				Button btnE = (Button)findViewById(R.id.btnEditItem);
-		        btnE.setVisibility(View.VISIBLE);
-		        
+				toggleAddToEditCancelButtons(true);
+
 		        EditText etNewItem = (EditText)findViewById(R.id.etNewItem);
 		        etNewItem.setText(items.get(pos));
 		        
@@ -116,23 +109,9 @@ public class ToDoActivity extends ActionBarActivity {
 			        	items.remove(pos);
 			        	items.add(pos, val);					         
 			        	itemsAdapter.notifyDataSetChanged();
-			        	
-			        	Button btnE = (Button)findViewById(R.id.btnEditItem);
-			    		btnE.setVisibility(View.INVISIBLE);
-
-			    		Button btnC = (Button)findViewById(R.id.btnCancel);
-			    		btnC.setVisibility(View.INVISIBLE);
-			    		
-			    		Button btn = (Button)findViewById(R.id.btnAddItem);
-			    		btn.setVisibility(View.VISIBLE);
-			    		
-			    		clearText();
+			        	toggleAddToEditCancelButtons(false);
 					}
 		        });
-		        
-		        Button btnC = (Button)findViewById(R.id.btnCancel);
-		        btnC.setVisibility(View.VISIBLE);
-		        
 			}			
 		});
 	}
@@ -142,17 +121,12 @@ public class ToDoActivity extends ActionBarActivity {
 		etNewItem.setText("");
 	}
 	
-	private void toggleAddEditButtons(){
+	private void toggleAddToEditCancelButtons(boolean toggle){
 		clearText();
 		
-		Button btnE = (Button)findViewById(R.id.btnEditItem);
-		btnE.setVisibility(View.INVISIBLE);
-
-		Button btnC = (Button)findViewById(R.id.btnCancel);
-		btnC.setVisibility(View.INVISIBLE);
-		
-		Button btn = (Button)findViewById(R.id.btnAddItem);		
-		btn.setVisibility(View.VISIBLE);
+		btnE.setVisibility(toggle?View.VISIBLE:View.INVISIBLE);
+		btnC.setVisibility(toggle?View.VISIBLE:View.INVISIBLE);
+		btnA.setVisibility(toggle?View.INVISIBLE:View.VISIBLE);
 	}
 	
 	private void readItems(){
