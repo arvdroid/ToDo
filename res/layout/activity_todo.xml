@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="my.apps.todo.ToDoActivity$PlaceholderFragment" >
+
+    <ListView
+        android:id="@+id/lvItems"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/etNewItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lvItems"
+        android:layout_alignRight="@+id/lvItems"
+        android:layout_below="@+id/lvItems"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Enter new items" >
+        
+    </EditText>
+
+    <Button
+        android:id="@+id/btnAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etNewItem"
+        android:layout_below="@+id/etNewItem"        
+        android:onClick="addTodoItem"
+        android:text="Add" />
+    
+    <Button
+        android:id="@+id/btnEditItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etNewItem"
+        android:layout_below="@+id/etNewItem"
+        android:layout_marginRight="74dp"
+        android:onClick="editTodoItem"
+        android:text="Edit"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etNewItem"
+        android:layout_below="@+id/etNewItem"
+        android:text="Cancel"
+        android:onClick="canceTodoItem"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
